@@ -14,5 +14,5 @@ public interface AddressService {
     Address get(long id) throws ResourceDoesNotExistException;
     Address add(Address address) throws ResourceAlreadyExistsException, ResourceDoesNotExistException;
     Address update(long id, Address address) throws ResourceDoesNotExistException;
-    void delete(long id) throws ResourceDoesNotExistException;
+    boolean delete(long id) throws ResourceDoesNotExistException;
 }

@@ -61,12 +61,13 @@ public class ChildServiceImpl implements ChildService {
     }
 
     @Override
-    public void delete(long id) throws ResourceDoesNotExistException {
+    public boolean delete(long id) throws ResourceDoesNotExistException {
         Optional<Child> optionalChild = childRepository.findById(id);
         if(optionalChild.isPresent()){
             childRepository.deleteById(id);
         }else{
             throw new ResourceDoesNotExistException(id+"");
         }
+        return true;
     }
 }

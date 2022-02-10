@@ -7,6 +7,7 @@ import com.ancestors.exception.ResourceDoesNotExistException;
 import com.ancestors.repositories.AddressRepository;
 import com.ancestors.services.AddressService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,12 +54,35 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Address update(long id, Address address) throws ResourceDoesNotExistException {
-        return null;
+        Optional<Address> optionalAddress = addressRepository.findById(id);
+        if(optionalAddress.isPresent()){
+//            Address dbAddress = optionalAddress.get();
+//            BeanUtils.copyProperties(address,dbAddress);
+//            dbAddress.setId(id);
+//            Address savedAddress = addressRepository.save(dbAddress);
+
+            Address dbAddress = optionalAddress.get();
+            dbAddress.setId(id);
+            dbAddress.setState(address.getState());
+            dbAddress.setCity(address.getCity());
+            dbAddress.setZip(address.getZip());
+            dbAddress.setStreet(address.getStreet());
+            Address savedAddress = addressRepository.save(dbAddress);
+            return savedAddress;
+        }else{
+            throw new ResourceDoesNotExistException(id+"");
+        }
     }
 
     @Override
-    public void delete(long id) throws ResourceDoesNotExistException {
-
+    public boolean delete(long id) throws ResourceDoesNotExistException {
+        Optional<Address> optionalAddress = addressRepository.findById(id);
+        if(optionalAddress.isPresent()){
+            addressRepository.deleteById(id);
+            return true;
+        }else{
+            throw new ResourceDoesNotExistException(id+"");
+        }
     }
 
 

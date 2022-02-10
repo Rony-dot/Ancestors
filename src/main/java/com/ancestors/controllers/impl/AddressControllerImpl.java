@@ -42,11 +42,25 @@ public class AddressControllerImpl implements AddressController {
 
     @Override
     public ResponseEntity<Address> update(String id, Address address) {
-        return null;
+        try {
+            Address updatedAddress = addressService.update(Long.parseLong(id), address);
+            return ResponseEntity.status(HttpStatus.CREATED).body(updatedAddress);
+        } catch (ResourceDoesNotExistException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Override
     public ResponseEntity<Void> delete(String id) {
-        return null;
+        try {
+            if(addressService.delete(Long.parseLong(id))){
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+        } catch (ResourceDoesNotExistException e) {
+            e.printStackTrace();
+
+        }
+        return ResponseEntity.notFound().build();
     }
 }

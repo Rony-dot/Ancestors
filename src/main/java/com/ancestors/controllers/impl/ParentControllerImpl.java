@@ -2,6 +2,7 @@ package com.ancestors.controllers.impl;
 
 import com.ancestors.controllers.ParentController;
 import com.ancestors.dtos.request.ParentDto;
+import com.ancestors.entities.Child;
 import com.ancestors.entities.Parent;
 import com.ancestors.exception.ResourceAlreadyExistsException;
 import com.ancestors.exception.ResourceDoesNotExistException;
@@ -43,11 +44,24 @@ public class ParentControllerImpl implements ParentController {
 
     @Override
     public ResponseEntity<Parent> update(String id, Parent parent) {
-        return null;
+        try {
+            Parent updatedParent = parentService.update(Long.parseLong(id), parent);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedParent);
+        } catch (ResourceDoesNotExistException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Override
     public ResponseEntity<Void> delete(String id) {
-        return null;
+        try {
+            if(parentService.delete(Long.parseLong(id))){
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+        } catch (ResourceDoesNotExistException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

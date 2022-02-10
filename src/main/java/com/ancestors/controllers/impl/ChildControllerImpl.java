@@ -10,6 +10,7 @@ import com.ancestors.services.ParentService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,11 +51,24 @@ public class ChildControllerImpl implements ChildController {
 
     @Override
     public ResponseEntity<Child> update(String id, Child child) {
-        return null;
+        try {
+            Child updatedChild = childService.update(Long.parseLong(id), child);
+            return ResponseEntity.status(HttpStatus.OK).body(updatedChild);
+        } catch (ResourceDoesNotExistException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @Override
     public ResponseEntity<Void> delete(String id) {
-        return null;
+        try {
+            if(childService.delete(Long.parseLong(id))){
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }
+        } catch (ResourceDoesNotExistException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

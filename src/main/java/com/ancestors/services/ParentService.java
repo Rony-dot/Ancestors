@@ -12,6 +12,6 @@ public interface ParentService {
     Parent get(long id) throws ResourceDoesNotExistException;
     Parent add(ParentDto parentDto) throws ResourceAlreadyExistsException, ResourceDoesNotExistException;
     Parent update(long id, Parent parent) throws ResourceDoesNotExistException;
-    void delete(long id) throws ResourceDoesNotExistException;
+    boolean delete(long id) throws ResourceDoesNotExistException;
 
 }
