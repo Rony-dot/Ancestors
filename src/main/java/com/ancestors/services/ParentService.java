@@ -10,7 +10,7 @@ import java.util.List;
 public interface ParentService {
     List<Parent> getAll();
     Parent get(long id) throws ResourceDoesNotExistException;
-    Parent add(Parent parent) throws ResourceAlreadyExistsException;
+    Parent add(ParentDto parentDto) throws ResourceAlreadyExistsException, ResourceDoesNotExistException;
     Parent update(long id, Parent parent) throws ResourceDoesNotExistException;
     void delete(long id) throws ResourceDoesNotExistException;
 

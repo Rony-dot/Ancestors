@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public interface ParentController {
 
     @PostMapping("/add")
-    ResponseEntity<Void> add(@RequestBody Parent parent);
+    ResponseEntity<Parent> add(@RequestBody ParentDto parentDto);
 
     @GetMapping("/{id}")
     ResponseEntity<Parent> get(@PathVariable String id);

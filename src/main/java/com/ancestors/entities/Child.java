@@ -29,11 +29,11 @@ public class Child {
     private String firstName;
     private String lastName;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "father_id")
     private Parent father;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "mother_id")
     private Parent mother;
 }

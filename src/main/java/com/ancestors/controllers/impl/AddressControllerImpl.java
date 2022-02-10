@@ -1,11 +1,11 @@
 package com.ancestors.controllers.impl;
 
-import com.ancestors.controllers.ParentController;
-import com.ancestors.dtos.request.ParentDto;
-import com.ancestors.entities.Parent;
+import com.ancestors.controllers.AddressController;
+import com.ancestors.entities.Address;
+import com.ancestors.entities.Child;
 import com.ancestors.exception.ResourceAlreadyExistsException;
 import com.ancestors.exception.ResourceDoesNotExistException;
-import com.ancestors.services.ParentService;
+import com.ancestors.services.AddressService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,35 +14,34 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-public class ParentControllerImpl implements ParentController {
-
+public class AddressControllerImpl implements AddressController {
     @Autowired
-    private ParentService parentService;
+    private AddressService addressService;
 
     @Override
-    public ResponseEntity<Parent> add(ParentDto parentDto) {
+    public ResponseEntity<Address> add(Address address) {
         try {
-            Parent savedParent = parentService.add(parentDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedParent);
+            Address savedAddress = addressService.add(address);
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedAddress);
         } catch (ResourceAlreadyExistsException | ResourceDoesNotExistException e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().build();
         }
+        return ResponseEntity.badRequest().build();
     }
 
     @Override
-    public ResponseEntity<Parent> get(String id) {
+    public ResponseEntity<Address> get(String id) {
         try {
-            Parent savedParent = parentService.get(Long.parseLong(id));
-            return ResponseEntity.ok().body(savedParent);
+            Address address = addressService.get(Long.parseLong(id));
+            return ResponseEntity.ok().body(address);
         } catch (ResourceDoesNotExistException e) {
             e.printStackTrace();
-            return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.notFound().build();
     }
 
     @Override
-    public ResponseEntity<Parent> update(String id, Parent parent) {
+    public ResponseEntity<Address> update(String id, Address address) {
         return null;
     }
 

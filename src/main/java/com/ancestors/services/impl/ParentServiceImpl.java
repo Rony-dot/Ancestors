@@ -1,11 +1,14 @@
 package com.ancestors.services.impl;
 
+import com.ancestors.dtos.request.ParentDto;
 import com.ancestors.entities.Parent;
 import com.ancestors.exception.ResourceAlreadyExistsException;
 import com.ancestors.exception.ResourceDoesNotExistException;
 import com.ancestors.repositories.ParentRepository;
+import com.ancestors.services.AddressService;
 import com.ancestors.services.ParentService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +21,8 @@ public class ParentServiceImpl implements ParentService {
 
     @Autowired
     private ParentRepository parentRepository;
+    @Autowired
+    private AddressService addressService;
 
     @Override
     public List<Parent> getAll() {
@@ -36,14 +41,12 @@ public class ParentServiceImpl implements ParentService {
     }
 
     @Override
-    public Parent add(Parent parent) throws ResourceAlreadyExistsException {
-        Optional<Parent> optionalParent = parentRepository.findById(parent.getId());
-        if(!optionalParent.isPresent()){
-            Parent savedParent = parentRepository.save(parent);
-            return savedParent;
-        }else{
-            throw new ResourceAlreadyExistsException(parent.getId()+"");
-        }
+    public Parent add(ParentDto parentDto) throws ResourceAlreadyExistsException, ResourceDoesNotExistException {
+        Parent parent = new Parent();
+        BeanUtils.copyProperties(parentDto,parent);
+        parent.setAddress(addressService.getAddressByZip(parentDto.getZipCode()));
+        Parent savedParent = parentRepository.save(parent);
+        return savedParent;
     }
 
     @Override
