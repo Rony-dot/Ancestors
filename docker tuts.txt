@@ -1,0 +1,17 @@
+
+docker network create ancestors-mysql
+
+docker container run --name mysqldb --network ancestors-mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=ancestors -d mysql:8
+
+docker container logs -f __
+
+docker container exec -it __ bash
+
+#app.properties
+#create docker file
+
+docker image build -t ancestors-app .
+
+ docker container run --network ancestors-mysql --name ancestors-app-container -p 8080:8080 -d ancestors-app
+
+docker container logs -f __
