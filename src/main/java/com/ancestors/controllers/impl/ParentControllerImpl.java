@@ -13,12 +13,19 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class ParentControllerImpl implements ParentController {
 
     @Autowired
     private ParentService parentService;
+
+    @Override
+    public ResponseEntity<List<Parent>> getAll() {
+        return ResponseEntity.ok(parentService.getAll());
+    }
 
     @Override
     public ResponseEntity<Parent> add(ParentDto parentDto) {

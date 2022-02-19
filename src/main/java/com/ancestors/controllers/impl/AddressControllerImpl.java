@@ -12,11 +12,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class AddressControllerImpl implements AddressController {
     @Autowired
     private AddressService addressService;
+
+    @Override
+    public ResponseEntity<List<Address>> getAll() {
+        return ResponseEntity.ok(addressService.getAll());
+    }
 
     @Override
     public ResponseEntity<Address> add(Address address) {

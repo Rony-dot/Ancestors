@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class ChildControllerImpl implements ChildController {
@@ -23,6 +25,11 @@ public class ChildControllerImpl implements ChildController {
 
     @Autowired
     private ParentService parentService;
+
+    @Override
+    public ResponseEntity<List<Child>> getAll() {
+        return ResponseEntity.ok(childService.getAll());
+    }
 
     @Override
     public ResponseEntity<Void> add(ChildDto childDto) {
@@ -40,13 +47,8 @@ public class ChildControllerImpl implements ChildController {
 
     @Override
     public ResponseEntity<Child> get(String id) {
-        try {
-            Child savedChild = childService.get(Long.parseLong(id));
-            return ResponseEntity.ok().body(savedChild);
-        } catch (ResourceDoesNotExistException e) {
-            e.printStackTrace();
-            return null;
-        }
+        Child savedChild = childService.get(Long.parseLong(id));
+        return ResponseEntity.ok(savedChild);
     }
 
     @Override

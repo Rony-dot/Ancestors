@@ -29,12 +29,9 @@ public class ChildServiceImpl implements ChildService {
 
     @Override
     public Child get(long id) throws ResourceDoesNotExistException {
-        Optional<Child> optionalChild = childRepository.findById(id);
-        if(optionalChild.isPresent()){
-            return optionalChild.get();
-        }else{
-            throw new ResourceDoesNotExistException(id+"");
-        }
+        Child child = childRepository.findById(id)
+                .orElseThrow(() -> new ResourceDoesNotExistException("Child not found : " + id));
+        return child;
     }
 
     @Override

@@ -5,8 +5,13 @@ import com.ancestors.entities.Parent;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/parents")
 public interface ParentController {
+
+    @GetMapping("")
+    ResponseEntity<List<Parent>> getAll();
 
     @PostMapping("/add")
     ResponseEntity<Parent> add(@RequestBody ParentDto parentDto);

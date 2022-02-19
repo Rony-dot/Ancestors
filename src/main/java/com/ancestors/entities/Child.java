@@ -1,5 +1,6 @@
 package com.ancestors.entities;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@JsonFilter("ChlidsFilter")
 public class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

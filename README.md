@@ -1,6 +1,6 @@
 ## Idea to satisfy the specification
 
-- ####Postman collection is given with this project; Import that file in post man and run the add request sequentially
+- #### Postman collection is given with this project; Import that file in post man and run the add request sequentially
     1) Add Address (POST request)
     2) Add Parent (POST request)
     3) Add Child (POST request)
